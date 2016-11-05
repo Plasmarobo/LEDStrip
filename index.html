@@ -13,6 +13,8 @@
   <script type="text/javascript" src="color_chart.js"></script>
   <script type="text/javascript" src="audios.js"></script>
   <script type="text/javascript" src="disco_stick.js"></script>
+  <script type="text/javascript" src="jquery-mousewheel/jquery.mousewheel.min.js"></script>
+  <script type="text/javascript" src="debug.js"></script>
   <script type="text/javascript">
     var strip, animation; // need to be global
 
@@ -92,6 +94,15 @@
       driver = new DiscoStick(strip);
       driver.init();
       
+      $('#mouse_motion').mousemove(function(event) {
+        driver.motion_xy(event.pageX, event.pageY);
+        return false;
+      });
+      
+      $('#mouse_motion').mousewheel(function(event) {
+        driver.motion_z(event.deltaX, event.deltaY, event.deltaFactor);
+        return false;
+      });
 
       $('#diffuser').change(function(e) {
         $('.ledstrip').toggleClass('diffuse');

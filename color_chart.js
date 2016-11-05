@@ -69,7 +69,7 @@ ColorPlot.prototype.draw = function() {
     this.context.strokeRect(x,y,w * this.color[i]/255,h);
     y += this.bucket_height + this.pad;
   }
-  this.context.fillStyle = 'rgb(' + this.color[0], + ',' +this.color[1] + ',' + this.color[2] + ')';
+  this.context.fillStyle = this.getColor();
   this.context.fillRect(this.margin.left + this.innerPad, y, this.bucket_height-this.pad, this.bucket_height-this.pad);
   this.context.strokeRect(this.margin.left + this.innerPad, y, this.bucket_height-this.pad, this.bucket_height-this.pad);
   
@@ -84,4 +84,42 @@ ColorPlot.prototype.clear = function() {
   this.color[0] = 0;
   this.color[1] = 0;
   this.color[2] = 0;
+}
+
+ColorPlot.prototype.normalize_xy = function(x) {
+  x = Math.ceil(128 + (128 * x / this.width));
+  if(x < 0) x = 0; else if(x > 255) x = 255;
+  assert(Number.isNaN(x), 'X should never be NaN');
+  return x;
+}
+
+ColorPlot.prototype.normalize_z = function(z) {
+  z = Math.ceil(128 + 128 * Math.abs(z));
+  if(z > 255) z = 255;
+  assert(!Number.isNaN(z), 'Z should never be NaN');
+  return z;
+}
+
+ColorPlot.prototype.R = function(r) {
+  this.color[0] = this.normalize_xy(r);
+}
+
+ColorPlot.prototype.G = function(g) {
+  this.color[1] = this.normalize_xy(g);
+}
+
+ColorPlot.prototype.B = function(b) {
+  this.color[2] = this.normalize_z(b);
+}
+
+ColorPlot.prototype.getColor = function() {
+  return "rgba("+ this.color[0]+", "+this.color[1]+", "+this.color[2]+", 1)";
+}
+
+ColorPlot.prototype.getValue = function() {
+  return this.color;
+}
+
+ColorPlot.prototype.getWeights = function() {
+  return [this.color[0]/255, this.color[1]/255, this.color[2]/255];
 }
