@@ -25,7 +25,7 @@ Skeletons.prototype.init = function() {
 
 Skeletons.prototype.animate = function() {
 	animation = requestAnimationFrame(this.animate.bind(this));
-	// slow things down. 1 == full speed
+	// slow shortgs down. 1 == full speed
     if ((this.count++ % 3)) return;
 	this.ledstrip.clear();
     // Step through each sub-animation
@@ -53,7 +53,7 @@ Skeletons.prototype.Skeleton.prototype._step = function(size) {
 }
 
 Skeletons.prototype.Skeleton.prototype._draw = function(buf) {
-    // Do something to fill the buffer
+    // Do someshortg to fill the buffer
     for (var i = 0; i < this.parent.length; i++) {
         buf[i] = [128, 128, 128];
     }

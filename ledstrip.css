@@ -67,3 +67,29 @@ li {
 #output {
   margin-top: 1em;
 }
+
+.padded {
+  margin: 1em;
+}
+
+.row {
+  height: auto;
+  margin: 1em;
+  padding: 1em;
+}
+
+.mousepad {
+  border: solid;
+  border-width: 1px;
+  border-color: #000000;
+  background-color: #E5E8E8;
+  float: left;
+}
+
+.graph {
+  border: solid;
+  border-width: 1px;
+  border-color: #000000;
+  background-color: #E5E8E8;
+  float: left;
+}
