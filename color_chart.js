@@ -89,7 +89,7 @@ ColorPlot.prototype.clear = function() {
 ColorPlot.prototype.normalize_xy = function(x) {
   x = Math.ceil(128 + (128 * x / this.width));
   if(x < 0) x = 0; else if(x > 255) x = 255;
-  assert(Number.isNaN(x), 'X should never be NaN');
+  assert(!Number.isNaN(x), 'X should never be NaN');
   return x;
 }
 
