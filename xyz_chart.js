@@ -27,6 +27,7 @@ function Vector3Plot(target_id) {
 	this.scene.add( this.xAxis );
 	this.scene.add( this.yAxis );
 	this.scene.add( this.zAxis );
+	this.next = new THREE.Vector3(0,0,0);
 }
 
 Vector3Plot.prototype.resize = function(width, height) {
@@ -38,7 +39,8 @@ Vector3Plot.prototype.resize = function(width, height) {
 	this.camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 }
 
-Vector3Plot.prototype.update = function(t) {
+Vector3Plot.prototype.update = function() {
+  this.plot(this.next);
 }
 
 Vector3Plot.prototype.plot = function(vec3) {
@@ -54,6 +56,18 @@ Vector3Plot.prototype.plot = function(vec3) {
   this.xAxis.scale.x = avg.x;
   this.yAxis.scale.y = avg.y;
   this.zAxis.scale.z = avg.z;
+}
+
+Vector3Plot.prototype.X = function(x) {
+  this.next.x = x;
+}
+
+Vector3Plot.prototype.Y = function(y) {
+  this.next.y = y; 
+}
+
+Vector3Plot.prototype.Z = function(z) {
+  this.next.z = z;
 }
 
 Vector3Plot.prototype.draw = function(){

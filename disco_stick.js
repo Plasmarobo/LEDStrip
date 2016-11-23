@@ -60,7 +60,7 @@ DiscoStick.prototype.init = function() {
     this.last_buckets.push(255);
   }
   this.generateSines(array); 
-  this.xyz_plot.plot(new THREE.Vector3(50,25,5));
+  this.xyz_plot.plot(new THREE.Vector3(1,1,1));
   var color = {};
   color.r = 255;
   color.g = 128;
@@ -90,6 +90,7 @@ DiscoStick.prototype.animate = function() {
   this.update(this.sound.getFrequencyBuckets());
   this.spectra_plot.draw();
   this.sine_plot.draw();
+  this.xyz_plot.update();
   this.xyz_plot.draw();
   this.color_plot.draw();
   this.ledstrip.send();
@@ -104,7 +105,7 @@ DiscoStick.prototype.Sine = function(frequency, amplitude, phase, shift) {
   this.amplitude = amplitude;
   this.phase = phase;
   this.shift = shift;
-  this.basic_rate = 2;
+  this.basic_rate = 8;
   this.frequency_to_angle = 500;
   return this;
 }
@@ -174,7 +175,7 @@ DiscoStick.prototype.generateSines = function(array) {
     n = i + 1;
     this.spectra_plot.plot((n * this.step) + " hz", array[i] * this.spectral_modifiers[i]);
     this.sine_plot.plot((n * this.step), this.sine_scale * array[i] * this.spectral_modifiers[i], phase, 0);
-    this.Sines[i * this.step] = new this.Sine((n * this.step), array[i] * this.spectral_modifiers[i], phase, 30 - (n * this.mag_step));
+    this.Sines[i * this.step] = new this.Sine((n * this.step), array[i] * this.spectral_modifiers[i], phase, -30 + (n * this.mag_step));
     phase = (i % 2) ? Math.PI / 2 : 0;
   }
 }
@@ -193,6 +194,8 @@ DiscoStick.prototype.motion_xy = function(new_x,new_y) {
   this.last_xy_time = Date.now();
   this.color_plot.R(x);
   this.color_plot.G(y);
+  this.xyz_plot.X(x);
+  this.xyz_plot.Y(y);
 }
 
 DiscoStick.prototype.motion_z = function(x,y,factor) {
@@ -201,4 +204,5 @@ DiscoStick.prototype.motion_z = function(x,y,factor) {
   var delta = y * (1000/dt);
   this.last_z_time = Date.now();
   this.color_plot.B(delta);
+  this.xyz_plot.Z(delta);
 }
